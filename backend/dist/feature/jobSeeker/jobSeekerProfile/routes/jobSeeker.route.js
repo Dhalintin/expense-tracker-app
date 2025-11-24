@@ -1,0 +1,27 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const deleteJobSeeker_1 = require("../controllers/deleteJobSeeker");
+const queryJobSeeker_1 = require("../controllers/queryJobSeeker");
+const updateJobSeeker_1 = require("../controllers/updateJobSeeker");
+const authMiddleware_1 = require("../../../../middlewares/authMiddleware");
+const getJobSeeker_1 = require("../controllers/getJobSeeker");
+const createJobSeeker_1 = require("../controllers/createJobSeeker");
+const multer_1 = require("../../../../middlewares/multer");
+const router = express_1.default.Router();
+router.post("/create/:userId", authMiddleware_1.authMiddleware, multer_1.singleupload, createJobSeeker_1.CreateJobSeekerController.create);
+router.post("/upload/resume", authMiddleware_1.authMiddleware, multer_1.resumeUpload, updateJobSeeker_1.UpdateJobSeekerController.uploadResume);
+router.get("/profile/:id", authMiddleware_1.authMiddleware, getJobSeeker_1.GetJobSeekerController.getSeekerById);
+router.get("/", getJobSeeker_1.GetJobSeekerController.getAllJobSeeker);
+router.get("/user/:userId", authMiddleware_1.authMiddleware, getJobSeeker_1.GetJobSeekerController.getSeekerByUSerId);
+router.patch("/profile/:id", multer_1.singleupload, authMiddleware_1.authMiddleware, updateJobSeeker_1.UpdateJobSeekerController.updateSeeker);
+router.delete("/profile/:id", authMiddleware_1.authMiddleware, deleteJobSeeker_1.DeleteJobSeekerController.deleteSeeker);
+router.get("/search", queryJobSeeker_1.QueryJobSeekerController.querySeeker);
+router.get("/talents", queryJobSeeker_1.QueryJobSeekerController.searchTalent);
+router.post("/filter", authMiddleware_1.authMiddleware, queryJobSeeker_1.QueryJobSeekerController.saveFilter);
+router.get("/filter", authMiddleware_1.authMiddleware, queryJobSeeker_1.QueryJobSeekerController.getFilter);
+router.patch("/filter/:id", authMiddleware_1.authMiddleware, queryJobSeeker_1.QueryJobSeekerController.updateFilter);
+exports.default = router;

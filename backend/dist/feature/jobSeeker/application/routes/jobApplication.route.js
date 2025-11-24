@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const applicationController_1 = require("../controllers/applicationController");
+const authMiddleware_1 = require("../../../../middlewares/authMiddleware");
+const applicationRoutes = (0, express_1.Router)();
+const controller = new applicationController_1.ApplicationController();
+applicationRoutes.post("/apply/:jobPostingId", authMiddleware_1.authMiddleware, controller.createAplication);
+applicationRoutes.get("/job-applications/:id", authMiddleware_1.authMiddleware, controller.getJobApplicationsWithMaskedApplicants);
+applicationRoutes.get("/job-applications/unmasked/:id", authMiddleware_1.authMiddleware, controller.getJobApplicationsWithUnmaskedApplicants);
+applicationRoutes.get("/user-applications/", authMiddleware_1.authMiddleware, controller.getUserApplications);
+applicationRoutes.patch("/update/:id", authMiddleware_1.authMiddleware, controller.updateApplication);
+applicationRoutes.delete("/delete/:id", authMiddleware_1.authMiddleware, controller.deleteApplication);
+applicationRoutes.post("/save-job/:jobPostingId", authMiddleware_1.authMiddleware, controller.saveJob);
+applicationRoutes.get("/saved/jobs", authMiddleware_1.authMiddleware, controller.getSavedJobs);
+applicationRoutes.get("/saved/job/:id", authMiddleware_1.authMiddleware, controller.getSavedJob);
+applicationRoutes.get("/delete/savedjob/:id", authMiddleware_1.authMiddleware, controller.deleteSavedJobs);
+exports.default = applicationRoutes;

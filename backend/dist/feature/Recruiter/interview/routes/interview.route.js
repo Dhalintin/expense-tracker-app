@@ -1,0 +1,19 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const interview_controller_1 = require("../controllers/interview.controller");
+const authMiddleware_1 = require("../../../../middlewares/authMiddleware");
+const interviewRoutes = express_1.default.Router();
+const interviewController = new interview_controller_1.InterviewController();
+interviewRoutes.post("/schedule", authMiddleware_1.authMiddleware, interviewController.createInterview);
+interviewRoutes.get("/:id", authMiddleware_1.authMiddleware, interviewController.getInterviews);
+interviewRoutes.get("/", interviewController.getAllInterview);
+interviewRoutes.get("/jobseeker/upcoming-interview", interviewController.getJobseekerUpcomingInterview);
+interviewRoutes.get("/recruiter/upcoming-interview", interviewController.getRecruiterUpcomingInterview);
+interviewRoutes.get("/jobseeker", authMiddleware_1.authMiddleware, interviewController.getJobSeekerInterviews);
+interviewRoutes.delete("/:id", authMiddleware_1.authMiddleware, interviewController.deleteInterview);
+interviewRoutes.patch("/:id", authMiddleware_1.authMiddleware, interviewController.updateInterview);
+exports.default = interviewRoutes;
