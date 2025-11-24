@@ -138,6 +138,6 @@ Everything works **locally** — no deployment required.
 
 Feel free to reach out if you need clarification - **uchexdhalitin@gmail.com**
 
-Made with ❤️ by **Darlington**
+Made by **Darlington**
 
 ---
